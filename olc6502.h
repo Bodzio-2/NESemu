@@ -72,6 +72,7 @@ public:
     void irq();     //Interrupt request signal - can be ignored if the "non interrupt" mask is enabled
     void nmi();     //Non-maskable interrupt request - ignores the above mask
 
+private:
     //Functions implemented to facilitate emulation
     uint8_t fetch(); //Function used to fetch data for an instruction
     uint8_t fetched = 0x00; //where the above is stored
@@ -80,7 +81,8 @@ public:
     uint16_t addr_rel = 0x00;   // relative address (used in branch instructions for jumping)
     uint8_t opcode = 0x00;  // opcode of the instruction
     uint8_t cycles = 0; // numbers of cycles left in the duration of that instruction (in 6502 instructions last very precise clock signal amounts, modern processors can do all calculations quicker, so we need to arbitrarily wait a number of cycles to match designed specifications)
-private:
+    uint16_t temp = 0x0000; // A convenience variable (for anything we need)
+    
     //Pointer to the bus (so the CPU can access it)
     Bus *bus = nullptr;
     //Analogical functions for R/W but for the CPU, it just calls R/W functions of the assigned bus
